@@ -80,7 +80,6 @@ input[type="tel"]{
 input[type="range"]{
     width:100%;
     height:8px;
-    border-radius:10px;
     cursor:pointer;
     accent-color:#d14ea4;
 }
@@ -94,7 +93,6 @@ input[type="range"]{
 }
 
 .range-labels span{
-    position:relative;
     text-align:center;
 }
 
@@ -133,7 +131,6 @@ button:hover{
     font-weight:500;
     line-height:1.5;
 }
-
 </style>
 
 </head>
@@ -145,60 +142,77 @@ button:hover{
 <h1>Регистрация на квиз</h1>
 
 <div class="subtitle">
-22 июля, 19:00 | Китайка (Октябрьской революции, 205)
+2 июля, 19:00 | Китайка (Октябрьской революции, 205)
 </div>
 
 
-<form id="quizForm">
+<form id="quizForm" 
+action="https://formspree.io/f/xwvgewde" 
+method="POST">
+
 
 <label>Название команды</label>
-<input type="text" name="team" placeholder="Например: Знатоки" required>
+
+<input 
+type="text" 
+name="team"
+placeholder="Например: Знатоки"
+required>
 
 
 <label>Количество участников</label>
 
 <div class="range-wrapper">
 
-    <div class="people">
-        <span id="count">3</span> человека
-    </div>
+<div class="people">
+<span id="count">3</span> человека
+</div>
 
-    <input 
-        type="range" 
-        id="members" 
-        name="members"
-        min="3" 
-        max="8" 
-        value="3"
-        step="1"
-    >
+<input 
+type="range"
+id="members"
+name="members"
+min="3"
+max="8"
+value="3"
+step="1"
+>
 
-    <div class="range-labels">
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
-        <span>6</span>
-        <span>7</span>
-        <span>8</span>
-    </div>
+
+<div class="range-labels">
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+</div>
 
 </div>
 
 
 <label>Контактный телефон</label>
-<input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required>
+
+<input 
+type="tel"
+name="phone"
+placeholder="+7 (___) ___-__-__"
+required>
 
 
 <button type="submit">
 Зарегистрироваться
 </button>
 
+
 </form>
 
 
 <div class="success" id="success">
+
 Спасибо за регистрацию!<br>
 С вами свяжутся за день до квиза.
+
 </div>
 
 
@@ -215,13 +229,34 @@ range.addEventListener("input", function(){
 });
 
 
-document.getElementById("quizForm").addEventListener("submit",function(e){
+const form = document.getElementById("quizForm");
+
+form.addEventListener("submit", async function(e){
 
     e.preventDefault();
 
-    this.style.display="none";
+    const data = new FormData(form);
 
-    document.getElementById("success").style.display="block";
+    const response = await fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: {
+            "Accept": "application/json"
+        }
+    });
+
+
+    if(response.ok){
+
+        form.style.display="none";
+
+        document.getElementById("success").style.display="block";
+
+    } else {
+
+        alert("Ошибка отправки. Попробуйте ещё раз.");
+
+    }
 
 });
 
