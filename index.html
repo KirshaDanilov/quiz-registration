@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Регистрация на квиз</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -17,11 +19,11 @@
 body{
     font-family:'Roboto',sans-serif;
     background:#FAC1EA;
+    min-height:100vh;
+    padding:20px;
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:100vh;
-    padding:20px;
 }
 
 .container{
@@ -31,6 +33,101 @@ body{
     padding:35px;
     border-radius:20px;
     box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+
+
+/* =========================
+   ВЫБОР КВИЗА
+========================= */
+
+.selection-screen h1{
+    font-size:32px;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.selection-subtitle{
+    text-align:center;
+    color:#666;
+    font-size:16px;
+    line-height:1.4;
+    margin-bottom:28px;
+}
+
+.quiz-list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.quiz-card{
+    width:100%;
+    background:#fafafa;
+    border:1px solid #eee;
+    border-radius:16px;
+    padding:20px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.quiz-card:hover{
+    border-color:#d14ea4;
+    transform:translateY(-2px);
+    box-shadow:0 6px 15px rgba(209,78,164,.12);
+}
+
+.quiz-date{
+    font-size:22px;
+    font-weight:700;
+    color:#222;
+    margin-bottom:8px;
+}
+
+.quiz-place{
+    color:#666;
+    font-size:15px;
+    line-height:1.4;
+    margin-bottom:17px;
+}
+
+.quiz-button{
+    display:block;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#d14ea4;
+    color:#fff;
+    font-family:'Roboto',sans-serif;
+    font-size:16px;
+    font-weight:500;
+    cursor:pointer;
+}
+
+
+/* =========================
+   ЭКРАН РЕГИСТРАЦИИ
+========================= */
+
+.registration-screen{
+    display:none;
+}
+
+.back-button{
+    display:inline-block;
+    border:none;
+    background:none;
+    color:#777;
+    font-family:'Roboto',sans-serif;
+    font-size:14px;
+    padding:0;
+    margin-bottom:20px;
+    cursor:pointer;
+}
+
+.back-button:hover{
+    color:#d14ea4;
 }
 
 h1{
@@ -63,7 +160,18 @@ input[type="tel"]{
     font-size:16px;
     margin-bottom:22px;
     font-family:'Roboto',sans-serif;
+    outline:none;
 }
+
+input[type="text"]:focus,
+input[type="tel"]:focus{
+    border-color:#d14ea4;
+}
+
+
+/* =========================
+   ПОЛЗУНОК
+========================= */
 
 .range-wrapper{
     margin-bottom:25px;
@@ -105,22 +213,41 @@ input[type="range"]{
     margin:0 auto 5px;
 }
 
-button{
+
+/* =========================
+   КНОПКА
+========================= */
+
+.submit-button{
     width:100%;
+    min-height:50px;
     padding:15px;
     border:none;
     border-radius:12px;
     background:#d14ea4;
     color:#fff;
+    font-family:'Roboto',sans-serif;
     font-size:17px;
     font-weight:500;
     cursor:pointer;
     transition:.2s;
+    touch-action:manipulation;
+    -webkit-appearance:none;
 }
 
-button:hover{
+.submit-button:hover{
     background:#bc3e92;
 }
+
+.submit-button:disabled{
+    opacity:.7;
+    cursor:default;
+}
+
+
+/* =========================
+   УСПЕШНАЯ РЕГИСТРАЦИЯ
+========================= */
 
 .success{
     display:none;
@@ -131,164 +258,456 @@ button:hover{
     font-weight:500;
     line-height:1.5;
 }
+
+
+/* =========================
+   МОБИЛЬНАЯ ВЕРСИЯ
+========================= */
+
+@media (max-width:480px){
+
+    body{
+        padding:15px;
+        align-items:flex-start;
+        padding-top:30px;
+    }
+
+    .container{
+        padding:25px 20px;
+    }
+
+    h1,
+    .selection-screen h1{
+        font-size:28px;
+    }
+
+    .quiz-date{
+        font-size:20px;
+    }
+
+}
+
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-<h1>Регистрация на квиз</h1>
 
-<div class="subtitle">
-29 августа, 18:00 | Рёдерс Сад (г. Зарайск, Парк Кирова)
-</div>
+<!-- =================================
+     ЭКРАН ВЫБОРА КВИЗА
+================================= -->
 
+<div class="selection-screen" id="selectionScreen">
 
-<form id="quizForm" 
-action="https://formspree.io/f/xwvgewde" 
-method="POST">
+    <h1>Регистрация на квиз</h1>
 
-
-<label>Название команды</label>
-
-<input 
-type="text" 
-name="team"
-placeholder="Например: Знатоки"
-required>
+    <div class="selection-subtitle">
+        Выберите игру, на которую хотите зарегистрироваться
+    </div>
 
 
-<label>Количество участников</label>
-
-<div class="range-wrapper">
-
-<div class="people">
-<span id="count">3</span> человека
-</div>
-
-<input 
-type="range"
-id="members"
-name="members"
-min="3"
-max="8"
-value="3"
-step="1"
->
-
-
-<div class="range-labels">
-<span>3</span>
-<span>4</span>
-<span>5</span>
-<span>6</span>
-<span>7</span>
-<span>8</span>
-</div>
+    <div class="quiz-list" id="quizList"></div>
 
 </div>
 
 
-<label>Контактный телефон</label>
 
-<input 
-type="tel"
-name="phone"
-placeholder="+7 (___) ___-__-__"
-required>
+<!-- =================================
+     ЭКРАН РЕГИСТРАЦИИ
+================================= -->
 
-
-<button type="submit">
-Зарегистрироваться
-</button>
+<div class="registration-screen" id="registrationScreen">
 
 
-</form>
+    <button 
+        type="button" 
+        class="back-button"
+        id="backButton"
+    >
+        ← Назад к выбору квиза
+    </button>
 
 
-<div class="success" id="success">
+    <h1>Регистрация на квиз</h1>
 
-Спасибо за регистрацию!<br>
-С вами свяжутся за день до квиза.
+
+    <div class="subtitle" id="quizSubtitle"></div>
+
+
+    <form 
+        id="quizForm"
+        action="https://formspree.io/f/xwvgewde"
+        method="POST"
+    >
+
+
+        <!-- Выбранный квиз автоматически попадёт в письмо -->
+        <input 
+            type="hidden" 
+            name="quiz"
+            id="selectedQuiz"
+        >
+
+
+        <label for="team">
+            Название команды
+        </label>
+
+        <input 
+            type="text"
+            id="team"
+            name="team"
+            placeholder="Например: Знатоки"
+            required
+        >
+
+
+
+        <label>
+            Количество участников
+        </label>
+
+
+        <div class="range-wrapper">
+
+
+            <div class="people">
+    <span id="count">3 человека</span>
+</div>
+
+
+            <input 
+                type="range"
+                id="members"
+                name="members"
+                min="3"
+                max="8"
+                value="3"
+                step="1"
+            >
+
+
+            <div class="range-labels">
+
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+                <span>6</span>
+                <span>7</span>
+                <span>8</span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <label for="phone">
+            Контактный телефон
+        </label>
+
+
+        <input 
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="+7 (___) ___-__-__"
+            required
+        >
+
+
+
+        <button 
+            type="submit"
+            class="submit-button"
+            id="submitButton"
+        >
+            Зарегистрироваться
+        </button>
+
+
+    </form>
+
+
+
+    <div class="success" id="success">
+
+        Спасибо за регистрацию!<br>
+        С вами свяжутся за день до квиза.
+
+    </div>
+
 
 </div>
 
 
 </div>
+
 
 
 <script>
 
-const range = document.getElementById("members");
-const count = document.getElementById("count");
 
-if (range && count) {
-    range.addEventListener("input", function () {
-        count.textContent = this.value;
-    });
-}
+/* ==========================================
+   СПИСОК КВИЗОВ
 
+   Здесь можно добавлять новые регистрации.
+========================================== */
+
+const quizzes = [
+
+    {
+        id: "quiz-1",
+        date: "29 августа, 19:00",
+        place: "МЦ «Русь»",
+        address: "Коломна, Астахова, 23"
+    },
+
+    {
+        id: "quiz-2",
+        date: "29 августа, 19:00",
+        place: "Рёдерс Сад",
+        address: "Зарайск, Парк Кирова"
+    }
+
+];
+
+
+
+/* ==========================================
+   ЭЛЕМЕНТЫ СТРАНИЦЫ
+========================================== */
+
+const quizList = document.getElementById("quizList");
+
+const selectionScreen = document.getElementById("selectionScreen");
+
+const registrationScreen = document.getElementById("registrationScreen");
+
+const quizSubtitle = document.getElementById("quizSubtitle");
+
+const selectedQuiz = document.getElementById("selectedQuiz");
+
+const backButton = document.getElementById("backButton");
 
 const form = document.getElementById("quizForm");
 
-if (form) {
+const success = document.getElementById("success");
 
-    form.addEventListener("submit", async function(e) {
-
-        e.preventDefault();
-
-        const button = form.querySelector("button");
-
-        button.disabled = true;
-        button.textContent = "Отправляем...";
+const submitButton = document.getElementById("submitButton");
 
 
-        try {
 
-            const response = await fetch(form.action, {
+/* ==========================================
+   СОЗДАНИЕ КАРТОЧЕК КВИЗОВ
+========================================== */
+
+quizzes.forEach(function(quiz){
+
+    const card = document.createElement("div");
+
+    card.className = "quiz-card";
+
+
+    card.innerHTML = `
+
+        <div class="quiz-date">
+            ${quiz.date}
+        </div>
+
+        <div class="quiz-place">
+            ${quiz.place}<br>
+            ${quiz.address}
+        </div>
+
+        <button 
+            type="button"
+            class="quiz-button"
+        >
+            Зарегистрироваться
+        </button>
+
+    `;
+
+
+    card.addEventListener("click", function(){
+
+        openRegistration(quiz);
+
+    });
+
+
+    quizList.appendChild(card);
+
+});
+
+
+
+/* ==========================================
+   ОТКРЫТИЕ ФОРМЫ
+========================================== */
+
+function openRegistration(quiz){
+
+    selectionScreen.style.display = "none";
+
+    registrationScreen.style.display = "block";
+
+
+    quizSubtitle.textContent =
+        quiz.date + " | " +
+        quiz.place + " (" +
+        quiz.address +
+        ")";
+
+
+    selectedQuiz.value =
+        quiz.date + " | " +
+        quiz.place + " (" +
+        quiz.address +
+        ")";
+
+
+    form.reset();
+
+
+    document.getElementById("members").value = 3;
+
+    document.getElementById("count").textContent = 3;
+
+
+    form.style.display = "block";
+
+    success.style.display = "none";
+
+    submitButton.disabled = false;
+
+    submitButton.textContent = "Зарегистрироваться";
+
+}
+
+
+
+/* ==========================================
+   НАЗАД К ВЫБОРУ
+========================================== */
+
+backButton.addEventListener("click", function(){
+
+    registrationScreen.style.display = "none";
+
+    selectionScreen.style.display = "block";
+
+});
+
+
+
+/* ==========================================
+   ПОЛЗУНОК
+========================================== */
+
+const range = document.getElementById("members");
+const count = document.getElementById("count");
+
+function updatePeopleCount(){
+
+    const number = Number(range.value);
+
+    let word;
+
+    if(number === 3 || number === 4){
+        word = "человека";
+    }else{
+        word = "человек";
+    }
+
+    count.textContent = number + " " + word;
+}
+
+if(range && count){
+
+    range.addEventListener("input", updatePeopleCount);
+
+    updatePeopleCount();
+
+}
+
+
+
+/* ==========================================
+   ОТПРАВКА ФОРМЫ
+========================================== */
+
+form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+
+    submitButton.disabled = true;
+
+    submitButton.textContent = "Отправляем...";
+
+
+    try{
+
+
+        const response = await fetch(
+            form.action,
+            {
                 method: "POST",
                 body: new FormData(form),
                 headers: {
                     "Accept": "application/json"
                 }
-            });
-
-
-            if (response.ok) {
-
-                form.style.display = "none";
-
-                document.getElementById("success").style.display = "block";
-
-            } else {
-
-                alert("Ошибка отправки формы. Попробуйте ещё раз.");
-
-                button.disabled = false;
-                button.textContent = "Зарегистрироваться";
-
             }
+        );
 
 
-        } catch (error) {
+        if(response.ok){
 
-            console.log(error);
+            form.style.display = "none";
 
-            alert("Ошибка соединения. Проверьте интернет и попробуйте снова.");
+            success.style.display = "block";
 
-            button.disabled = false;
-            button.textContent = "Зарегистрироваться";
+        }else{
+
+            alert(
+                "Не удалось отправить заявку. Попробуйте ещё раз."
+            );
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Зарегистрироваться";
 
         }
 
-    });
 
-}
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Ошибка соединения. Проверьте интернет и попробуйте ещё раз."
+        );
+
+        submitButton.disabled = false;
+
+        submitButton.textContent =
+            "Зарегистрироваться";
+
+    }
+
+});
+
 
 </script>
 
 
 </body>
-</html>
