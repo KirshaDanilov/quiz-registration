@@ -71,6 +71,13 @@ body{
     transition:.2s;
 }
 
+.quiz-title{
+    font-size:20px;
+    font-weight:700;
+    color:#d14ea4;
+    margin-bottom:8px;
+}
+
 .quiz-card:hover{
     border-color:#d14ea4;
     transform:translateY(-2px);
@@ -464,16 +471,10 @@ const quizzes = [
 
     {
         id: "quiz-1",
-        date: "29 августа, 18:00",
+        title: "Квиз по Сумеркам",
+        date: "11 сентября, 19:00",
         place: "МЦ «Русь»",
         address: "Коломна, Астахова, 23"
-    },
-
-    {
-        id: "quiz-2",
-        date: "29 августа, 18:00",
-        place: "Рёдерс Сад",
-        address: "Зарайск, Парк Кирова"
     }
 
 ];
@@ -515,25 +516,29 @@ quizzes.forEach(function(quiz){
     card.className = "quiz-card";
 
 
-    card.innerHTML = `
+card.innerHTML = `
 
-        <div class="quiz-date">
-            ${quiz.date}
-        </div>
+    <div class="quiz-title">
+        ${quiz.title}
+    </div>
 
-        <div class="quiz-place">
-            ${quiz.place}<br>
-            ${quiz.address}
-        </div>
+    <div class="quiz-date">
+        ${quiz.date}
+    </div>
 
-        <button 
-            type="button"
-            class="quiz-button"
-        >
-            Зарегистрироваться
-        </button>
+    <div class="quiz-place">
+        ${quiz.place}<br>
+        ${quiz.address}
+    </div>
 
-    `;
+    <button 
+        type="button"
+        class="quiz-button"
+    >
+        Зарегистрироваться
+    </button>
+
+`;
 
 
     card.addEventListener("click", function(){
@@ -567,11 +572,12 @@ function openRegistration(quiz){
         ")";
 
 
-    selectedQuiz.value =
-        quiz.date + " | " +
-        quiz.place + " (" +
-        quiz.address +
-        ")";
+selectedQuiz.value =
+    quiz.title + " | " +
+    quiz.date + " | " +
+    quiz.place + " (" +
+    quiz.address +
+    ")";
 
 
     form.reset();
